@@ -10,7 +10,8 @@ int main()
 	sf::Event event;
 
 	Board board(SCR_WIDTH, SCR_HEIGHT);
-	// window.setFramerateLimit(10);
+	//window.setFramerateLimit(10);
+
 	while (window.isOpen()) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
@@ -21,7 +22,7 @@ int main()
 
 		window.clear();
 
-		// generating, pathfinding & drawing
+		// drawing
 		if (!board.error) {
 			if (!board.mazeGenDone)
 				board.genMaze();
@@ -32,6 +33,5 @@ int main()
 
 		window.display();
 	}
-
 	return 0;
 }
