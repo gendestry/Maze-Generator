@@ -19,12 +19,6 @@ Board::Board(int screenWidth, int screenHeight) : m_Width(screenWidth), m_Height
 	for (int i = 0; i < screenHeight / CELL_SIZE; i++) {
 		for (int j = 0; j < screenWidth / CELL_SIZE; j++) {
 			m_Cells.push_back(Cell(j, i));
-
-			if (i == START_Y && j == START_X)
-				m_Cells[START_X * START_Y].walls[0] = false;
-
-			if (i == END_Y - 1 && j == END_X - 1)
-				m_Cells[(END_X * END_Y) - 1].walls[1] = false;
 		}
 	}
 
@@ -55,7 +49,7 @@ int Board::nextNeighbour() {
 		indexes.push_back(getIndex(c.x - 1, c.y));
 	}
 
-	return indexes.size() > 0 ? indexes[rand() % indexes.size()] : 0;
+	return indexes.size() > 0 ? indexes[rand() % indexes.size()] : -1;
 }
 
 void Board::removeWalls(int nextIndex) {
@@ -82,10 +76,10 @@ void Board::removeWalls(int nextIndex) {
 
 void Board::genMaze() {
 	int next = nextNeighbour();
-	if (next != 0) {
+	if (next != -1) {
 		removeWalls(next);
 		current = &m_Cells[next];
-		(*current).visited = true;
+		current->visited = true;
 		stack.push_back((*current));
 	}
 	else if (stack.size() > 0) {
@@ -93,12 +87,12 @@ void Board::genMaze() {
 		
 		if (stack.size() > 0) {
 			Cell *temp = &stack.back();
-			current = &m_Cells[getIndex((*temp).x, (*temp).y)];
+			current = &m_Cells[getIndex(temp->x, temp->y)];
 			// delete temp; // dunno y
 		}
 		else {
 			mazeGenDone = true;
-			current = &m_Cells[0];
+			current = &m_Cells[getIndex(START_X, START_Y)];
 			current->correct = true;
 			current->marked = true;
 			std::cout << "Generated the maze!" << std::endl;
@@ -132,19 +126,18 @@ void Board::render(sf::RenderWindow &window) {
 			window.draw(rect);
 		}
 
-		if (i == 0) { // drawing start and end circle
+		if (i == getIndex(START_X, START_Y)) { // drawing start and end circle
 			circle.setFillColor(sf::Color::Red);
-			circle.setPosition(sf::Vector2f(circle.getRadius(), circle.getRadius()));
+			circle.setPosition(sf::Vector2f((START_X * CELL_SIZE) + circle.getRadius(), (START_Y * CELL_SIZE) + circle.getRadius()));
 			window.draw(circle);
 		}
-		else if (i == m_Cells.size() - 1) {
+		else if (i == getIndex(END_X - 1, END_Y - 1)) {
 			circle.setFillColor(sf::Color::Blue);
 			circle.setPosition(sf::Vector2f(((END_X - 1) * CELL_SIZE) + circle.getRadius(), ((END_Y - 1) * CELL_SIZE) + circle.getRadius()));
 			window.draw(circle);
 		}
 
 		// drawing walls
-		
 		if (m_Cells[i].walls[0]) { // top
 			horizontalWall.setPosition(sf::Vector2f(m_Cells[i].x * CELL_SIZE, m_Cells[i].y * CELL_SIZE));
 			window.draw(horizontalWall);
@@ -182,7 +175,7 @@ int Board::pathFindNextNeighbour() {
 		indexes.push_back(getIndex(c.x - 1, c.y));
 	}
 
-	return indexes.size() > 0 ? indexes[rand() % indexes.size()] : 0;
+	return indexes.size() > 0 ? indexes[rand() % indexes.size()] : -1;
 }
 
 void Board::findPath() {
@@ -193,7 +186,7 @@ void Board::findPath() {
 		current->correct = true;
 		std::cout << "Pathfinder has finished!" << std::endl;
 	}
-	else if (next != 0) {
+	else if (next != -1) {
 		current->correct = true;
 		current->marked = true;
 		stack.push_back((*current));
