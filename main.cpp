@@ -21,10 +21,12 @@ int main()
 
 		window.clear();
 
-		// drawing
+		// generating, pathfinding & drawing
 		if (!board.error) {
-			if(!board.done)
-				board.update();
+			if (!board.mazeGenDone)
+				board.genMaze();
+			else if (!board.allDone)
+				board.findPath();
 			board.render(window);
 		}
 
