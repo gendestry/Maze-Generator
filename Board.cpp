@@ -53,24 +53,24 @@ int Board::nextNeighbour() {
 }
 
 void Board::removeWalls(int nextIndex) {
-	int diff = getIndex((*current).x, (*current).y) - nextIndex;
+	int diff = getIndex(current->x, current->y) - nextIndex;
 	nextC = &m_Cells[nextIndex];
 
 	if (diff == 1) { // the current is to the RIGHT of the next
-		(*current).walls[3] = false;
-		(*nextC).walls[1] = false;
+		current->walls[3] = false;
+		nextC->walls[1] = false;
 	}
 	else if (diff == -1) { // the current is to the LEFT of the next
-		(*current).walls[1] = false;
-		(*nextC).walls[3] = false;
+		current->walls[1] = false;
+		nextC->walls[3] = false;
 	}
 	else if (diff < -1) {// the current is higher of the next
-		(*current).walls[2] = false;
-		(*nextC).walls[0] = false;
+		current->walls[2] = false;
+		nextC->walls[0] = false;
 	}
 	else if (diff > 1) {
-		(*current).walls[0] = false;
-		(*nextC).walls[2] = false;
+		current->walls[0] = false;
+		nextC->walls[2] = false;
 	}
 }
 
@@ -197,7 +197,7 @@ void Board::findPath() {
 		temp->correct = false;
 		current->marked = true;
 		current->correct = false;
-		current = &m_Cells[getIndex((*temp).x, (*temp).y)];
+		current = &m_Cells[getIndex(temp->x, temp->y)];
 		stack.pop_back();
 	}
 }
