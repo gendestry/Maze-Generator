@@ -4,7 +4,7 @@
 #include <iostream>
 #include <ctime>
 
-#define CELL_SIZE 40	// inverted difficulty the higher it is the easier the level
+#define CELL_SIZE 100	// inverted difficulty the higher it is the easier the level
 #define WALL_THICKNES 1
 
 #define START_X 0
