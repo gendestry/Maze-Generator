@@ -5,8 +5,6 @@ Board::Board(int screenWidth, int screenHeight) : m_Width(screenWidth), m_Height
 		throw std::runtime_error("screenWidth and screenHeight must be divisible by CELL_SIZE (width % cell_size = 0)!!!");
 	}
 
-	std::cout << END_X << " " << END_Y << std::endl;
-
 	srand(time(nullptr)); // seeding rand function FIX FUCKING END STUFFFFFF!!!
 	
 	// setting rectangles' sizes
