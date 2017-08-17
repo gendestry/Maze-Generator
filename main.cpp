@@ -36,7 +36,7 @@ int main() {
 	}
 	catch (std::exception& e) {
 		std::cerr << "Error: " << e.what() << "!!!\n";
-		system("pause");
+		std::cin.get();
 		return -1;
 	}
 	catch (...) { // this actually says ..., I'm not abbreviating :P
