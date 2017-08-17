@@ -1,5 +1,6 @@
 # Maze Generator in C++
 
+### Saves images of unsolved and solved maze
 
 ### Optinons can be found:
 ##### Main.cpp: screen width and height
