@@ -4,11 +4,11 @@
 #include <iostream>
 #include <ctime>
 
-#define CELL_SIZE 100	// inverted difficulty the higher it is the easier the level
-#define WALL_THICKNES 1
+const int CELL_SIZE = 20;	// inverted difficulty the higher it is the easier the level
+const int WALL_THICKNES = 1;
 
-#define START_X 0
-#define START_Y 0
+const int START_X = 0;
+const int START_Y = 0;
 #define END_X (m_Width / CELL_SIZE)
 #define END_Y (m_Height / CELL_SIZE)
 
@@ -50,7 +50,6 @@ public:
 	bool error = false;
 
 	Board(int screenWidth, int screenHeight);
-	~Board();
 
 	// uses maze generator
 	int nextNeighbour();				// returns index of the next neighbour (randomly)
@@ -59,7 +58,9 @@ public:
 
 	void render(sf::RenderWindow &window);
 
-	inline int getIndex(int x, int y);
+	inline int getIndex(int x, int y) {
+		return x + y * m_Width / CELL_SIZE;;
+	}
 
 	// pathfinder functions
 	int pathFindNextNeighbour();
