@@ -184,7 +184,6 @@ void Board::findPath() {
 	}
 	else if (stack.size() > 0) {
 		Cell *temp = &stack.back();
-		temp->correct = false;
 		current->marked = true;
 		current->correct = false;
 		current = &m_Cells[getIndex(temp->x, temp->y)];
