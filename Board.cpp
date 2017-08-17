@@ -5,7 +5,9 @@ Board::Board(int screenWidth, int screenHeight) : m_Width(screenWidth), m_Height
 		throw std::runtime_error("screenWidth and screenHeight must be divisible by CELL_SIZE (width % cell_size = 0)!!!");
 	}
 
-	srand(time(nullptr)); // seeding rand function
+	std::cout << END_X << " " << END_Y << std::endl;
+
+	srand(time(nullptr)); // seeding rand function FIX FUCKING END STUFFFFFF!!!
 	
 	// setting rectangles' sizes
 	rect.setSize(sf::Vector2f(CELL_SIZE, CELL_SIZE));
@@ -82,7 +84,6 @@ void Board::genMaze() {
 		if (stack.size() > 0) {
 			Cell *temp = &stack.back();
 			current = &m_Cells[getIndex(temp->x, temp->y)];
-			// delete temp; // dunno y
 		}
 		else {
 			mazeGenDone = true;
@@ -111,9 +112,12 @@ void Board::render(sf::RenderWindow &window) {
 			window.draw(rect);
 		}
 
-		if (i == (getIndex(current->x, current->y)) && current != &m_Cells[END_X * END_Y - 1]) { // draw current cell
-			rect.setFillColor(sf::Color(214, 113, 66));
-			window.draw(rect);
+		if (i == (getIndex(current->x, current->y))) { // draw current cell
+			if (current != &m_Cells[getIndex(START_X, START_Y)] && allDone != true) {
+				rect.setFillColor(sf::Color(214, 113, 66));
+			}
+				window.draw(rect);
+			//if()
 		}
 
 		if (i == getIndex(START_X, START_Y)) { // drawing start and end circle
@@ -121,9 +125,9 @@ void Board::render(sf::RenderWindow &window) {
 			circle.setPosition(sf::Vector2f((START_X * CELL_SIZE) + circle.getRadius(), (START_Y * CELL_SIZE) + circle.getRadius()));
 			window.draw(circle);
 		}
-		else if (i == getIndex(END_X - 1, END_Y - 1)) {
+		else if (i == getIndex(END_X, END_Y)) {
 			circle.setFillColor(sf::Color::Blue);
-			circle.setPosition(sf::Vector2f(((END_X - 1) * CELL_SIZE) + circle.getRadius(), ((END_Y - 1) * CELL_SIZE) + circle.getRadius()));
+			circle.setPosition(sf::Vector2f((END_X * CELL_SIZE) + circle.getRadius(), (END_Y * CELL_SIZE) + circle.getRadius()));
 			window.draw(circle);
 		}
 
@@ -171,7 +175,7 @@ int Board::pathFindNextNeighbour() {
 void Board::findPath() {
 	int next = pathFindNextNeighbour();
 	// std::cout << next << std::endl;
-	if (current->x == (END_X - 1) && current->y == (END_Y - 1)) {
+	if (current->x == (END_X) && current->y == (END_Y)) {
 		allDone = true;
 		current->correct = true;
 		std::cout << "Pathfinder has finished!" << std::endl;
