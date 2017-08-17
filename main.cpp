@@ -39,7 +39,7 @@ int main() {
 		std::cin.get();
 		return -1;
 	}
-	catch (...) { // this actually says ..., I'm not abbreviating :P
+	catch (...) {
 		std::cerr << "Unknown error.\n";
 		return -1;
 	}
