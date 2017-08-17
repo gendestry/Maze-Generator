@@ -1,8 +1,8 @@
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "Board.h"
 
-#define SCR_WIDTH 800
-#define SCR_HEIGHT 600
+const int SCR_WIDTH = 800;
+const int SCR_HEIGHT = 600;
 
 int main()
 {
@@ -10,7 +10,7 @@ int main()
 	sf::Event event;
 
 	Board board(SCR_WIDTH, SCR_HEIGHT);
-	//window.setFramerateLimit(10);
+	// window.setFramerateLimit(10);
 
 	while (window.isOpen()) {
 		while (window.pollEvent(event)) {
