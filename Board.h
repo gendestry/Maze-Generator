@@ -9,8 +9,8 @@ const int WALL_THICKNES = 1;
 
 const int START_X = 0;
 const int START_Y = 0;
-#define END_X (m_Width / CELL_SIZE)
-#define END_Y (m_Height / CELL_SIZE)
+#define END_X ((m_Width / CELL_SIZE) - 1)
+#define END_Y ((m_Height / CELL_SIZE) - 1)
 
 struct Cell {
 	bool walls[4];			// top right bottom left
