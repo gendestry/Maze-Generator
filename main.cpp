@@ -36,7 +36,6 @@ int main() {
 	}
 	catch (std::exception& e) {
 		std::cerr << "Error: " << e.what() << "!!!\n";
-		std::cin.get();
 		return -1;
 	}
 	catch (...) {
