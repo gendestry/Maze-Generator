@@ -2,8 +2,7 @@
 
 Board::Board(int screenWidth, int screenHeight) : m_Width(screenWidth), m_Height(screenHeight) {
 	if (screenWidth % CELL_SIZE != 0 || screenHeight % CELL_SIZE != 0) {
-		error = true;
-		std::cout << "Error: screenWidth and screenHeight must be divisible by CELL_SIZE (width % cell_size = 0)!!!";
+		throw std::runtime_error("screenWidth and screenHeight must be divisible by CELL_SIZE (width % cell_size = 0)!!!");
 	}
 
 	srand(time(nullptr)); // seeding rand function
@@ -25,11 +24,6 @@ Board::Board(int screenWidth, int screenHeight) : m_Width(screenWidth), m_Height
 	current = &m_Cells[getIndex(START_X, START_Y)];		// starter cell is visited
 	current->visited = true;
 	stack.push_back((*current));
-}
-
-Board::~Board() {
-	// delete current; // doens't work for some reason
-	// delete next;
 }
 
 int Board::nextNeighbour() {
@@ -98,10 +92,6 @@ void Board::genMaze() {
 			std::cout << "Generated the maze!" << std::endl;
 		}
 	}
-}
-
-inline int Board::getIndex(int x, int y) {
-	return x + y * m_Width / CELL_SIZE;;
 }
 
 void Board::render(sf::RenderWindow &window) {
